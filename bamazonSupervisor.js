@@ -16,6 +16,24 @@ var connection = mysql.createConnection({
   database: "bamazon"
 });
 
+ 
+// instantiate
+var table = new Table({
+    head: ['Department ID', 'Department Name', 'Overhead Costs', 'Total Sales', 'Total Profit']
+  , colWidths: [10, 18, 18, 18, 18]
+});
+ 
+// table is an Array, so you can `push`, `unshift`, `splice` and friends
+table.push(
+    ['1', 'Electronics', '1000', '2000']
+  , ['2', 'sports and outdoors', '500', '1000']
+  , ['3', 'home', '400', '300']
+  , ['4', 'office supplies', '100', '60']
+  , ['5', 'exercise equiptment', '300', '1000']
+);
+ 
+
+
 inquirer.prompt([
     {
       type: "list",
@@ -27,10 +45,7 @@ inquirer.prompt([
      //console.log(answers.menuOptions[0]);
      if(answers.menuOptions[0] == 1){
         //view product sales by department
-        connection.query(`SELECT * FROM products`, (err, res) => {
-            if (err) throw err;
-            console.log(res);
-        })
+        console.log(table.toString());
     } else if (answers.menuOptions[0] == 2){
         //create a new department
     }

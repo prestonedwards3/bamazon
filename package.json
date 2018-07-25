@@ -18,6 +18,8 @@
   "homepage": "https://github.com/prestonedwards3/bamazon#readme",
   "dependencies": {
     "cli": "^1.0.1",
+    "cli-table": "^0.3.1",
+    "console.table": "^0.10.0",
     "inquirer": "^6.0.0",
     "mysql": "github:mysqljs/mysql",
     "table": "^4.0.3"

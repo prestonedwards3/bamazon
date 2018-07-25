@@ -1,6 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var Table = require('cli-table');
+// var Table = require('cli-table');
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -20,7 +20,7 @@ var itemToBuy = "";
 var quantity = "";
 var subtotal;
 var totalArr = []; 
-var total; 
+var total = 0; 
 
 function displayCatalog() {
   connection.query(`SELECT * FROM products`, (err, res) => {
@@ -79,7 +79,14 @@ function purchaseProduct() {
         if (err) throw err;
         if(res[0].stock_quantity > quantity){
           var subtotal = res[0].price * quantity;
-          console.log(`Thank you for purchasing: ${res[0].product_name}`)
+          //var subtotal = parseInt(subtotal);
+          totalArr.push(subtotal);
+          //for (var i = 0; i < totalArr.length; i++){
+            //total += totalArr;
+            //console.log(totalArr);
+
+          //}
+          console.log(`Thank you for purchasing: ${res[0].product_name} Your total is ${subtotal}`)
           connection.query(`UPDATE products SET ? WHERE ?`, [
             {
               stock_quantity: res[0].stock_quantity - quantity,
@@ -100,11 +107,12 @@ function purchaseProduct() {
           }
           ]).then(answers => {
             if(answers.continue){
+              
               //if yes provide them with the catelog
               purchaseProduct();
             } else {
               //if they are done shoping thank them for coming and then provide them with their reciept
-              console.log(`Thanks for coming! Your total is ${subtotal} `)
+              console.log(`Thanks for coming!`)
             }
           });
           }
